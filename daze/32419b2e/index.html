@@ -21,17 +21,18 @@
     
     
     <meta name="keywords" content="linux常用命令">
-    <meta name="description" content="清除yum缓存12yum clean all  yum makecache 查看linux内核版本123cat &#x2F;proc&#x2F;version或者uname -r  返回">
+    <meta name="description" content="linux清除yum缓存12yum clean all  yum makecache 查看linux内核版本123cat &#x2F;proc&#x2F;version或者uname -r  返回">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux常用命令记录(持续更新)">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;32419b2e&#x2F;index.html">
 <meta property="og:site_name" content="DAZE">
-<meta property="og:description" content="清除yum缓存12yum clean all  yum makecache 查看linux内核版本123cat &#x2F;proc&#x2F;version或者uname -r  返回">
+<meta property="og:description" content="linux清除yum缓存12yum clean all  yum makecache 查看linux内核版本123cat &#x2F;proc&#x2F;version或者uname -r  返回">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;32419b2e&#x2F;1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;32419b2e&#x2F;2.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;32419b2e&#x2F;3.jpg">
 <meta property="article:published_time" content="2019-12-19T06:56:08.460Z">
-<meta property="article:modified_time" content="2019-12-19T07:12:05.834Z">
+<meta property="article:modified_time" content="2019-12-20T08:48:37.482Z">
 <meta property="article:author" content="许大志">
 <meta property="article:tag" content="linux常用命令">
 <meta name="twitter:card" content="summary">
@@ -154,7 +155,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#清除yum缓存"><span class="post-toc-number">1.</span> <span class="post-toc-text">清除yum缓存</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看linux内核版本"><span class="post-toc-number">2.</span> <span class="post-toc-text">查看linux内核版本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看linux发行版本"><span class="post-toc-number">3.</span> <span class="post-toc-text">查看linux发行版本</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#linux"><span class="post-toc-number">1.</span> <span class="post-toc-text">linux</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#清除yum缓存"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">清除yum缓存</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看linux内核版本"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">查看linux内核版本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看linux发行版本"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">查看linux发行版本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看端口号占用"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">查看端口号占用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#文件压缩"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">文件压缩</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解压"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">解压</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#压缩"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">压缩</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#nginx"><span class="post-toc-number">2.</span> <span class="post-toc-text">nginx</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#nginx重启"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">nginx重启</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看nginx安装目录"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">查看nginx安装目录</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看nginx版本"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">查看nginx版本</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -180,7 +181,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h2 id="清除yum缓存"><a href="#清除yum缓存" class="headerlink" title="清除yum缓存"></a>清除yum缓存</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all  </span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+            <h1 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h1><h2 id="清除yum缓存"><a href="#清除yum缓存" class="headerlink" title="清除yum缓存"></a>清除yum缓存</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean all  </span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
 <h2 id="查看linux内核版本"><a href="#查看linux内核版本" class="headerlink" title="查看linux内核版本"></a>查看linux内核版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat &#x2F;proc&#x2F;version</span><br><span class="line">或者</span><br><span class="line">uname -r</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>返回</p>
@@ -204,7 +205,25 @@
                 </div>
                 <div class="image-caption"></div>
             </figure>
+<h2 id="查看端口号占用"><a href="#查看端口号占用" class="headerlink" title="查看端口号占用"></a>查看端口号占用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i 端口号</span><br><span class="line">netstat -ntulp | grep 端口号</span><br></pre></td></tr></table></figure>
 
+<h2 id="文件压缩"><a href="#文件压缩" class="headerlink" title="文件压缩"></a>文件压缩</h2><h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;.tar</span><br><span class="line">tar xvf filename</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;.tar.gz</span><br><span class="line">tar xzvf filename</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;解压 tar.bz2</span><br><span class="line">tar -xjvf file.tar.bz2</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;指定目标文件夹</span><br><span class="line">tar xvf filename -C targetaddress</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;zip</span><br><span class="line">unzip 压缩后的文件名.zip</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;解压tar.Z</span><br><span class="line">tar –xZvf file.tar.Z </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 解压rar  </span><br><span class="line">unrar e file.rar</span><br></pre></td></tr></table></figure>
+<h3 id="压缩"><a href="#压缩" class="headerlink" title="压缩"></a>压缩</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;压缩文件</span><br><span class="line">tar -czvf test.tar.gz a.c   &#x2F;&#x2F;压缩 a.c文件为test.tar.gz</span><br><span class="line"></span><br><span class="line">zip -q -r 压缩后的文件名.zip  被压缩文件名</span><br></pre></td></tr></table></figure>
+
+<h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><h2 id="nginx重启"><a href="#nginx重启" class="headerlink" title="nginx重启"></a>nginx重启</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">service nginx restart</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;更新配置 若长连接一直存在 会沿用就配置 若新配置有错 不会提示 建议先nginx -t 检查配置</span><br><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+<h2 id="查看nginx安装目录"><a href="#查看nginx安装目录" class="headerlink" title="查看nginx安装目录"></a>查看nginx安装目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps  -ef|grep nginx</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>返回  master process 后面就是nginx目录</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/32419b2e/3.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h2 id="查看nginx版本"><a href="#查看nginx版本" class="headerlink" title="查看nginx版本"></a>查看nginx版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -212,7 +231,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-12-19T07:12:05.834Z" itemprop="dateUpdated">2019-12-19 15:12:05</time>
+    最后更新时间：<time datetime="2019-12-20T08:48:37.482Z" itemprop="dateUpdated">2019-12-20 16:48:37</time>
 </span><br>
 
 
