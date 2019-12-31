@@ -21,15 +21,15 @@
     
     
     <meta name="keywords" content="session,cookie">
-    <meta name="description" content="session与cookie** session是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个sessionid ，通过响应头发送给浏览器，浏览器再把 ** sessionidsession与cookie语言操作session、cookie">
+    <meta name="description" content="session与cookiesessionidsession是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个sessionid ，通过响应头发送给浏览器，浏览器再把sessionid存起来，下次请求的时候会带上sessionid，服务端会根据上传的sessionid去查找对应session sessionid 是如何在客户端和服务端传递的？服务器初次创建session的时候后返回se">
 <meta property="og:type" content="article">
 <meta property="og:title" content="session、cookie基础">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;index.html">
 <meta property="og:site_name" content="DAZE">
-<meta property="og:description" content="session与cookie** session是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个sessionid ，通过响应头发送给浏览器，浏览器再把 ** sessionidsession与cookie语言操作session、cookie">
+<meta property="og:description" content="session与cookiesessionidsession是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个sessionid ，通过响应头发送给浏览器，浏览器再把sessionid存起来，下次请求的时候会带上sessionid，服务端会根据上传的sessionid去查找对应session sessionid 是如何在客户端和服务端传递的？服务器初次创建session的时候后返回se">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-12-25T07:15:41.554Z">
-<meta property="article:modified_time" content="2019-12-26T01:39:58.822Z">
+<meta property="article:modified_time" content="2019-12-30T12:07:14.927Z">
 <meta property="article:author" content="许大志">
 <meta property="article:tag" content="session">
 <meta property="article:tag" content="cookie">
@@ -152,7 +152,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#session与cookie"><span class="post-toc-number">1.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sessionid"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">sessionid</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#session与cookie-1"><span class="post-toc-number">2.</span> <span class="post-toc-text">session与cookie</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#语言操作session、cookie"><span class="post-toc-number">3.</span> <span class="post-toc-text">语言操作session、cookie</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#session与cookie"><span class="post-toc-number">1.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sessionid"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">sessionid</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sessionid-是如何在客户端和服务端传递的？"><span class="post-toc-number">1.1.0.1.</span> <span class="post-toc-text">sessionid 是如何在客户端和服务端传递的？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话跟踪"><span class="post-toc-number">1.1.0.2.</span> <span class="post-toc-text">会话跟踪</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#session与cookie-1"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#cookie"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话cookie-临时"><span class="post-toc-number">1.2.1.1.</span> <span class="post-toc-text">会话cookie(临时)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#磁盘cookie-有过期时间"><span class="post-toc-number">1.2.1.2.</span> <span class="post-toc-text">磁盘cookie(有过期时间)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#cookie具体操作"><span class="post-toc-number">1.2.1.3.</span> <span class="post-toc-text">cookie具体操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安全性"><span class="post-toc-number">1.2.1.4.</span> <span class="post-toc-text">安全性</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#session"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">session</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session存放在哪里"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">session存放在哪里</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session在下列情况下被删除："><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">session在下列情况下被删除：</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#语言操作session、cookie"><span class="post-toc-number">2.</span> <span class="post-toc-text">语言操作session、cookie</span></a></li></ol>
         </nav>
     </aside>
 
@@ -178,8 +178,22 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="session与cookie"><a href="#session与cookie" class="headerlink" title="session与cookie"></a>session与cookie</h1><p>** session是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个<strong><em>sessionid</em></strong> ，通过响应头发送给浏览器，浏览器再把 **</p>
-<h2 id="sessionid"><a href="#sessionid" class="headerlink" title="sessionid"></a>sessionid</h2><h1 id="session与cookie-1"><a href="#session与cookie-1" class="headerlink" title="session与cookie"></a>session与cookie</h1><h1 id="语言操作session、cookie"><a href="#语言操作session、cookie" class="headerlink" title="语言操作session、cookie"></a>语言操作session、cookie</h1>
+            <h1 id="session与cookie"><a href="#session与cookie" class="headerlink" title="session与cookie"></a>session与cookie</h1><h2 id="sessionid"><a href="#sessionid" class="headerlink" title="sessionid"></a>sessionid</h2><p><strong>session是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个<u>sessionid </u>，通过响应头发送给浏览器，浏览器再把sessionid存起来，下次请求的时候会带上sessionid，服务端会根据上传的sessionid去查找对应session</strong></p>
+<h4 id="sessionid-是如何在客户端和服务端传递的？"><a href="#sessionid-是如何在客户端和服务端传递的？" class="headerlink" title="sessionid 是如何在客户端和服务端传递的？"></a>sessionid 是如何在客户端和服务端传递的？</h4><pre><code>服务器初次创建session的时候后返回session到客服端（在返回头（response）中有setCookie），浏览器会把sessionname-&gt;sessionid存到cooike中，同path下再次请求服务器时，会自动在请求头中带上cooike信息,服务器可以在_COOKIE中得取到想要的session</code></pre><h4 id="会话跟踪"><a href="#会话跟踪" class="headerlink" title="会话跟踪"></a>会话跟踪</h4><p>记录会话信息的技术成为会话跟踪。常见的会话跟踪技术有Cookie、URL重写、隐藏表单域、Session.</p>
+<h2 id="session与cookie-1"><a href="#session与cookie-1" class="headerlink" title="session与cookie"></a>session与cookie</h2><h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>   cookie是保存在客户端的一些信息，分为：</p>
+<h4 id="会话cookie-临时"><a href="#会话cookie-临时" class="headerlink" title="会话cookie(临时)"></a>会话cookie(临时)</h4><blockquote>
+<p>临时数据，存放在浏览器内存中，当关闭浏览器后cookie删除</p>
+</blockquote>
+<h4 id="磁盘cookie-有过期时间"><a href="#磁盘cookie-有过期时间" class="headerlink" title="磁盘cookie(有过期时间)"></a>磁盘cookie(有过期时间)</h4><blockquote>
+<p>持久化数据，以磁盘文件格式存放在系统磁盘中，不会随着浏览器关闭而删除，只有当设置的过期时间到的时候或者手动删除，才会被删除。</p>
+</blockquote>
+<h4 id="cookie具体操作"><a href="#cookie具体操作" class="headerlink" title="cookie具体操作"></a>cookie具体操作</h4><pre><code>1. 客户端发出http请求（不包含cookie信息）
+2. 服务器发出的响应中包含set-cookie,来通知客户端保存cookie信息。
+3. 客户端收到响应，保存好cookie信息后，再在发出的http请求中加入cookie字段信息(包含设置指定的字段信息，不是全部账号密码信息)。
+4. 服务器根据收到的请求，将cookie中的信息与之前的记录进行对比进行认证。</code></pre><h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>   1.cookie信息添加在http请求头中，明文传输，有一定风险。<br>   2.cookie的大小限制为4kb，一些复杂数据需求不适合</p>
+<h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><pre><code>session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构(也可能就是使用散列表)来保存信息。但程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否包含了一个session标识 —— 称为session id。</code></pre><h4 id="session存放在哪里"><a href="#session存放在哪里" class="headerlink" title="session存放在哪里"></a>session存放在哪里</h4><p>   服务器端的内存中。不过 session 可以通过特殊的方式做持久化管理（memcache，redis）</p>
+<h4 id="session在下列情况下被删除："><a href="#session在下列情况下被删除：" class="headerlink" title="session在下列情况下被删除："></a>session在下列情况下被删除：</h4><p>   1.程序调用HttpSession.invalidate()<br>   2.距离上一次收到客户端发送的session id时间间隔超过了session的最大有效时间<br>   3.服务器进程被停止</p>
+<h1 id="语言操作session、cookie"><a href="#语言操作session、cookie" class="headerlink" title="语言操作session、cookie"></a>语言操作session、cookie</h1>
         </div>
 
         <blockquote class="post-copyright">
@@ -187,7 +201,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-12-26T01:39:58.822Z" itemprop="dateUpdated">2019-12-26 09:39:58</time>
+    最后更新时间：<time datetime="2019-12-30T12:07:14.927Z" itemprop="dateUpdated">2019-12-30 20:07:14</time>
 </span><br>
 
 
