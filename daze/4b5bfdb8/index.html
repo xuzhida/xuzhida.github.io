@@ -14,21 +14,24 @@
     
     
     
-    <title>什么是docker | DAZE</title>
+    <title>初识docker | DAZE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="">
-    <meta property="og:type" content="article">
-<meta property="og:title" content="什么是docker">
+    <meta name="keywords" content="docker">
+    <meta name="description" content="前言一套代码在开发环境，测试环境，生产环境 时不时会出现一些不同的问题，可能是因为语言版本 数据库版本 系统版本等导致的问题，这个是很烦的，那能不能部署的时候连环境一起上呢？ Linux容器我们先来了解一下linux容器Linux 发展了一种虚拟化技术：Linux 容器（Linux Containers，缩写为 LXC） 在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识docker">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;4b5bfdb8&#x2F;index.html">
 <meta property="og:site_name" content="DAZE">
+<meta property="og:description" content="前言一套代码在开发环境，测试环境，生产环境 时不时会出现一些不同的问题，可能是因为语言版本 数据库版本 系统版本等导致的问题，这个是很烦的，那能不能部署的时候连环境一起上呢？ Linux容器我们先来了解一下linux容器Linux 发展了一种虚拟化技术：Linux 容器（Linux Containers，缩写为 LXC） 在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-12-19T07:33:24.000Z">
-<meta property="article:modified_time" content="2019-12-19T07:33:34.798Z">
+<meta property="article:published_time" content="2020-01-03T10:07:24.000Z">
+<meta property="article:modified_time" content="2020-01-03T10:10:44.643Z">
 <meta property="article:author" content="许大志">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -101,7 +104,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">什么是docker</div>
+        <div class="flex-col header-title ellipsis">初识docker</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -123,13 +126,15 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">什么是docker</h1>
+        <h1 class="title">初识docker</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-12-19T07:33:24.000Z" itemprop="datePublished" class="page-time">
-  2019-12-19
+                <time datetime="2020-01-03T10:07:24.000Z" itemprop="datePublished" class="page-time">
+  2020-01-03
 </time>
 
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/linux/">linux</a></li></ul>
 
             
         </h5>
@@ -143,16 +148,25 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Linux容器"><span class="post-toc-number">2.</span> <span class="post-toc-text">Linux容器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#docker"><span class="post-toc-number">3.</span> <span class="post-toc-text">docker</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#什么是docker"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">什么是docker</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#docker的用途"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">docker的用途</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#image文件"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">image文件</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-什么是docker"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">什么是docker</h1>
+        <h1 class="post-card-title">初识docker</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-12-19 15:33:24" datetime="2019-12-19T07:33:24.000Z"  itemprop="datePublished">2019-12-19</time>
+            <time class="post-time" title="2020-01-03 18:07:24" datetime="2020-01-03T10:07:24.000Z"  itemprop="datePublished">2020-01-03</time>
 
             
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/linux/">linux</a></li></ul>
+
 
 
             
@@ -163,7 +177,34 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一套代码在开发环境，测试环境，生产环境 时不时会出现一些不同的问题，可能是因为语言版本 数据库版本 系统版本等导致的问题，这个是很烦的，那能不能部署的时候连环境一起上呢？</p>
+<h1 id="Linux容器"><a href="#Linux容器" class="headerlink" title="Linux容器"></a>Linux容器</h1><p><em>我们先来了解一下linux容器</em><br>Linux 发展了一种虚拟化技术：Linux 容器（Linux Containers，缩写为 LXC）</p>
+<p>在正常进程的外面套了一个保护层。对于容器里面的进程来说，它接触到的各种资源都是虚拟的，从而实现与底层系统的隔离。</p>
+<blockquote>
+<p>容器是进程级别的</p>
+</blockquote>
+<p>相比虚拟机模拟一个系统的方式，容器的优势有很多。不会占用过多系统资源，没有上面冗余步骤，启动快，体积小</p>
+<blockquote>
+<p>容器有点像轻量级的虚拟机，能够提供虚拟化的环境，但是成本开销小得多。</p>
+</blockquote>
+<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><h3 id="什么是docker"><a href="#什么是docker" class="headerlink" title="什么是docker"></a>什么是docker</h3><blockquote>
+<p>docker属于对Linux容器的一种封装。</p>
+</blockquote>
+<p>   Docker 将应用程序与该程序的依赖，打包在一个文件里面。运行这个文件，就会生成一个虚拟容器。程序在这个虚拟容器里运行，就好像在真实的物理机上运行一样。有了 Docker，就不用担心环境问题。</p>
+<p>   总体来说，Docker 的接口相当简单，用户可以方便地创建和使用容器，把自己的应用放入容器。容器还可以进行版本管理、复制、分享、修改，就像管理普通的代码一样。</p>
+<h3 id="docker的用途"><a href="#docker的用途" class="headerlink" title="docker的用途"></a>docker的用途</h3><p>Docker 的主要用途，目前有三大类。<br>（1）<strong>提供一次性的环境</strong>。比如，本地测试他人的软件、持续集成的时候提供单元测试和构建的环境。</p>
+<p>（2）<strong>提供弹性的云服务</strong>。因为 Docker 容器可以随开随关，很适合动态扩容和缩容。</p>
+<p>（3）<strong>组建微服务架构</strong>。通过多个容器，一台机器可以跑多个服务，因此在本机就可以模拟出微服务架构。</p>
+<hr>
+<h3 id="image文件"><a href="#image文件" class="headerlink" title="image文件"></a>image文件</h3><p><strong>这个image不是指图片格式文件,image 是二进制文件。</strong></p>
+<blockquote>
+<p>Docker吧应用程序及其依赖，打包到 image 文件里头。</p>
+</blockquote>
+<p>只有通过这个文件，才能生成docker容器。image文件可以当作容器的模板。<br>docker根据image文件生成容器的实例，<em>一个image文件可以生成多个同时运行的容器实例</em></p>
+<p>实际开发中，你的个性化的 image 文件可以通过继承另一个 image 文件，加上一些个性化设置而生成。</p>
+<p>举例来说，你可以在 Ubuntu 的 image 基础上，往里面加入 Apache 服务器，形成你的 image。</p>
+<p>image文件是通用的，一台机器的image文件拷贝到另外一台机器，还是可以使用的。</p>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -171,7 +212,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-12-19T07:33:34.798Z" itemprop="dateUpdated">2019-12-19 15:33:34</time>
+    最后更新时间：<time datetime="2020-01-03T10:10:44.643Z" itemprop="dateUpdated">2020-01-03 18:10:44</time>
 </span><br>
 
 
@@ -195,6 +236,8 @@
 
         <div class="post-footer">
             
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
 
             
 <div class="page-share-wrap">
@@ -203,7 +246,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/4b5bfdb8/&title=《什么是docker》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/4b5bfdb8/&title=《初识docker》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -213,7 +256,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/4b5bfdb8/&title=《什么是docker》 — DAZE&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/4b5bfdb8/&title=《初识docker》 — DAZE&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -223,7 +266,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《什么是docker》 — DAZE&url=http://yoursite.com/daze/4b5bfdb8/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《初识docker》 — DAZE&url=http://yoursite.com/daze/4b5bfdb8/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -248,21 +291,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/daze/32419b2e/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">接口并发测试</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/daze/df50b4bc/" id="post-next" class="post-nav-link">
+      <a href="/daze/be5ae71e/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">EasySwoole 学习笔记(一)</h4>
+        <h4 class="title">返回json对象变成字符串--bom头</h4>
       </a>
     </div>
   
@@ -384,7 +420,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/4b5bfdb8/&title=《什么是docker》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/4b5bfdb8/&title=《初识docker》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -394,7 +430,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/4b5bfdb8/&title=《什么是docker》 — DAZE&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/4b5bfdb8/&title=《初识docker》 — DAZE&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -404,7 +440,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《什么是docker》 — DAZE&url=http://yoursite.com/daze/4b5bfdb8/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《初识docker》 — DAZE&url=http://yoursite.com/daze/4b5bfdb8/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
