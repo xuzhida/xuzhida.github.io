@@ -28,12 +28,17 @@
 <meta property="og:site_name" content="DAZE">
 <meta property="og:description" content="session与cookiesessionidsession是存放在服务端的。当浏览器发起第一次请求，服务端会自动生成一个sessionid ，通过响应头发送给浏览器，浏览器再把sessionid存起来，下次请求的时候会带上sessionid，服务端会根据上传的sessionid去查找对应session sessionid 是如何在客户端和服务端传递的？服务器初次创建session的时候后返回se">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;2.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;3.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;4.jpg">
 <meta property="article:published_time" content="2019-12-25T07:15:41.554Z">
-<meta property="article:modified_time" content="2019-12-30T12:07:14.927Z">
+<meta property="article:modified_time" content="2020-01-03T08:11:19.171Z">
 <meta property="article:author" content="许大志">
 <meta property="article:tag" content="session">
 <meta property="article:tag" content="cookie">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;9aa0226c&#x2F;1.jpg">
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -152,7 +157,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#session与cookie"><span class="post-toc-number">1.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sessionid"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">sessionid</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sessionid-是如何在客户端和服务端传递的？"><span class="post-toc-number">1.1.0.1.</span> <span class="post-toc-text">sessionid 是如何在客户端和服务端传递的？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话跟踪"><span class="post-toc-number">1.1.0.2.</span> <span class="post-toc-text">会话跟踪</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#session与cookie-1"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#cookie"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话cookie-临时"><span class="post-toc-number">1.2.1.1.</span> <span class="post-toc-text">会话cookie(临时)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#磁盘cookie-有过期时间"><span class="post-toc-number">1.2.1.2.</span> <span class="post-toc-text">磁盘cookie(有过期时间)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#cookie具体操作"><span class="post-toc-number">1.2.1.3.</span> <span class="post-toc-text">cookie具体操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安全性"><span class="post-toc-number">1.2.1.4.</span> <span class="post-toc-text">安全性</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#session"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">session</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session存放在哪里"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">session存放在哪里</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session在下列情况下被删除："><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">session在下列情况下被删除：</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#语言操作session、cookie"><span class="post-toc-number">2.</span> <span class="post-toc-text">语言操作session、cookie</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#session与cookie"><span class="post-toc-number">1.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#sessionid"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">sessionid</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#sessionid-是如何在客户端和服务端传递的？"><span class="post-toc-number">1.1.0.1.</span> <span class="post-toc-text">sessionid 是如何在客户端和服务端传递的？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话跟踪"><span class="post-toc-number">1.1.0.2.</span> <span class="post-toc-text">会话跟踪</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#session与cookie-1"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">session与cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#cookie"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#会话cookie-临时"><span class="post-toc-number">1.2.1.1.</span> <span class="post-toc-text">会话cookie(临时)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#磁盘cookie-有过期时间"><span class="post-toc-number">1.2.1.2.</span> <span class="post-toc-text">磁盘cookie(有过期时间)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#cookie具体操作"><span class="post-toc-number">1.2.1.3.</span> <span class="post-toc-text">cookie具体操作</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#安全性"><span class="post-toc-number">1.2.1.4.</span> <span class="post-toc-text">安全性</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#session"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">session</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session存放在哪里"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">session存放在哪里</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#session在下列情况下被删除："><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">session在下列情况下被删除：</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#php操作session、cookie"><span class="post-toc-number">2.</span> <span class="post-toc-text">php操作session、cookie</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一个利用session进行登录验证的简单例子"><span class="post-toc-number">2.0.0.1.</span> <span class="post-toc-text">一个利用session进行登录验证的简单例子</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用cookie存放数据"><span class="post-toc-number">2.0.0.2.</span> <span class="post-toc-text">利用cookie存放数据</span></a></li></ol></li></ol></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -193,7 +198,67 @@
 4. 服务器根据收到的请求，将cookie中的信息与之前的记录进行对比进行认证。</code></pre><h4 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h4><p>   1.cookie信息添加在http请求头中，明文传输，有一定风险。<br>   2.cookie的大小限制为4kb，一些复杂数据需求不适合</p>
 <h3 id="session"><a href="#session" class="headerlink" title="session"></a>session</h3><pre><code>session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构(也可能就是使用散列表)来保存信息。但程序需要为某个客户端的请求创建一个session的时候，服务器首先检查这个客户端的请求里是否包含了一个session标识 —— 称为session id。</code></pre><h4 id="session存放在哪里"><a href="#session存放在哪里" class="headerlink" title="session存放在哪里"></a>session存放在哪里</h4><p>   服务器端的内存中。不过 session 可以通过特殊的方式做持久化管理（memcache，redis）</p>
 <h4 id="session在下列情况下被删除："><a href="#session在下列情况下被删除：" class="headerlink" title="session在下列情况下被删除："></a>session在下列情况下被删除：</h4><p>   1.程序调用HttpSession.invalidate()<br>   2.距离上一次收到客户端发送的session id时间间隔超过了session的最大有效时间<br>   3.服务器进程被停止</p>
-<h1 id="语言操作session、cookie"><a href="#语言操作session、cookie" class="headerlink" title="语言操作session、cookie"></a>语言操作session、cookie</h1>
+<h1 id="php操作session、cookie"><a href="#php操作session、cookie" class="headerlink" title="php操作session、cookie"></a>php操作session、cookie</h1><h4 id="一个利用session进行登录验证的简单例子"><a href="#一个利用session进行登录验证的简单例子" class="headerlink" title="一个利用session进行登录验证的简单例子"></a>一个利用session进行登录验证的简单例子</h4><blockquote>
+<p>使用tp5框架</p>
+</blockquote>
+<p> 简单的登录页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class&#x3D;&quot;login&quot;&gt;    </span><br><span class="line">&lt;div class&#x3D;&quot;login-top&quot;&gt;        </span><br><span class="line">&lt;h1&gt;LOGIN FORM&lt;&#x2F;h1&gt;        </span><br><span class="line">&lt;form action&#x3D;&quot;&#x2F;landingpage&#x2F;test&#x2F;login_test&quot; method&#x3D;&quot;post&quot;&gt;            </span><br><span class="line">&lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot; value&#x3D;&quot;User Id&quot; onfocus&#x3D;&quot;this.value &#x3D; </span><br><span class="line">&#39;&#39;;&quot; onblur&#x3D;&quot;if (this.value &#x3D;&#x3D; &#39;&#39;) &#123;this.value &#x3D; &#39;User Id&#39;;&#125;&quot;&gt;            </span><br><span class="line">&lt;input type&#x3D;&quot;password&quot; name&#x3D;&quot;password&quot; value&#x3D;&quot;password&quot; </span><br><span class="line">onfocus&#x3D;&quot;this.value &#x3D; &#39;&#39;;&quot; onblur&#x3D;&quot;if (this.value &#x3D;&#x3D; &#39;&#39;) &#123;this.value &#x3D; </span><br><span class="line">&#39;password&#39;;&#125;&quot;&gt;            </span><br><span class="line">&lt;div class&#x3D;&quot;forgot&quot;&gt;                </span><br><span class="line">&lt;a href&#x3D;&quot;#&quot;&gt;forgot Password&lt;&#x2F;a&gt;                </span><br><span class="line">&lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;Login&quot; &gt;            </span><br><span class="line">&lt;&#x2F;div&gt;        </span><br><span class="line">&lt;&#x2F;form&gt;    </span><br><span class="line">&lt;&#x2F;div&gt;    </span><br><span class="line">&lt;div class&#x3D;&quot;login-bottom&quot;&gt;       </span><br><span class="line">&lt;h3&gt;New User &amp;nbsp;&lt;a href&#x3D;&quot;#&quot;&gt;Register&lt;&#x2F;a&gt;&amp;nbsp Here&lt;&#x2F;h3&gt;    </span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>登录操作</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public function login_test()&#123;</span><br><span class="line">&#x2F;&#x2F;        $data &#x3D; $this-&gt;request-&gt;post();       </span><br><span class="line">if(request()-&gt;isPost())&#123;            </span><br><span class="line">    $username &#x3D; input(&#39;username&#39;);            </span><br><span class="line">    $password &#x3D; input(&#39;password&#39;);     </span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;进行账号密码校验            </span><br><span class="line">    &#x2F;&#x2F; ......            </span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;通过校验后存储session            session(&#39;username&#39;,$username);           </span><br><span class="line">    $this-&gt;success(&#39;登录成功&#39;, url(&#39;landingpage&#x2F;test&#x2F;index&#39;), &#39;&#39;, 1); </span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>登出操作</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function logout()&#123;    </span><br><span class="line">Session::delete(&#39;username&#39;);    </span><br><span class="line">return &#39;done&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>登陆 ， login_test 用session保存了用户名，并且session会自动产生一个sessionid，返回给前端，前端再保存到cookie中</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/9aa0226c/1.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<blockquote>
+<p>页面跳转后打印一下 请求数据发现 客户端把自己的sessionid通过cookie附在了http请求中</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/9aa0226c/2.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<blockquote>
+<p>这时服务端就能够通过这个sessionid 来比对服务端自己存起来的sessionid 来判断是哪个用户 以及其状态等；就可以进行一些比如退出等操作。</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/9aa0226c/3.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h4 id="利用cookie存放数据"><a href="#利用cookie存放数据" class="headerlink" title="利用cookie存放数据"></a>利用cookie存放数据</h4><blockquote>
+<p>后端可以利用cookie让前端存一些内容，但是不安全</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> public function login_test()&#123;</span><br><span class="line">&#x2F;&#x2F;        $data &#x3D; $this-&gt;request-&gt;post();        </span><br><span class="line">if(request()-&gt;isPost())&#123;            </span><br><span class="line">$username &#x3D; input(&#39;username&#39;);            </span><br><span class="line">$password &#x3D; input(&#39;password&#39;);            </span><br><span class="line">&#x2F;&#x2F;进行账号密码校验            </span><br><span class="line">&#x2F;&#x2F; ......            </span><br><span class="line">&#x2F;&#x2F;通过校验后存储session            </span><br><span class="line">session(&#39;username&#39;,$username);            </span><br><span class="line">Cookie::set(&#39;justtest&#39;,&#39;存一些垃圾玩意儿&#39;);           </span><br><span class="line">$this-&gt;success(&#39;登录成功&#39;, url(&#39;landingpage&#x2F;test&#x2F;index&#39;), &#39;&#39;, 1);        </span><br><span class="line">&#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/9aa0226c/4.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -201,7 +266,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-12-30T12:07:14.927Z" itemprop="dateUpdated">2019-12-30 20:07:14</time>
+    最后更新时间：<time datetime="2020-01-03T08:11:19.171Z" itemprop="dateUpdated">2020-01-03 16:11:19</time>
 </span><br>
 
 
