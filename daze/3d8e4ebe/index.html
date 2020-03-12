@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>nginx 日志配置 | DAZE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="nginx">
+    <meta name="description" content="简介Nginx 软件会把自身的故障信息及用户的日志信息记录到指定的日志文件里。配置记录 Nginx 的错误日志是调试 Nginx 服务的重要手段，属于核心功能模块（ngx_core_module）的参数，该参数的名字是 error_log 日志配置日志配置参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx 日志配置">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;index.html">
+<meta property="og:site_name" content="DAZE">
+<meta property="og:description" content="简介Nginx 软件会把自身的故障信息及用户的日志信息记录到指定的日志文件里。配置记录 Nginx 的错误日志是调试 Nginx 服务的重要手段，属于核心功能模块（ngx_core_module）的参数，该参数的名字是 error_log 日志配置日志配置参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;3.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;4.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;5.jpg">
+<meta property="article:published_time" content="2020-03-11T10:04:07.000Z">
+<meta property="article:modified_time" content="2020-03-12T06:30:34.416Z">
+<meta property="article:author" content="许大志">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;3d8e4ebe&#x2F;2.png">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">许大志</h5>
+          <a href="mailto:327690910@qq.com" title="327690910@qq.com" class="mail">327690910@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">nginx 日志配置</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">nginx 日志配置</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-11T10:04:07.000Z" itemprop="datePublished" class="page-time">
+  2020-03-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/linux/">linux</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#日志配置"><span class="post-toc-number">2.</span> <span class="post-toc-text">日志配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志配置参数"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">日志配置参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#错误日志-–error-log"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">错误日志 –error.log</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#语法"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">语法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#位置"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">位置</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#访问日志"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">访问日志</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#日志参数"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">日志参数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#记录日志access-log参数说明："><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">记录日志access_log参数说明：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#语法："><span class="post-toc-number">2.3.2.1.</span> <span class="post-toc-text">语法：</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编辑主配置文件nginx-conf-增加错误日志配置："><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">编辑主配置文件nginx.conf 增加错误日志配置：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nginx访问日志轮询切割"><span class="post-toc-number">2.3.4.</span> <span class="post-toc-text">nginx访问日志轮询切割</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-nginx-日志配置"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">nginx 日志配置</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-11 18:04:07" datetime="2020-03-11T10:04:07.000Z"  itemprop="datePublished">2020-03-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/linux/">linux</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Nginx 软件会把自身的故障信息及用户的日志信息记录到指定的日志文件里。配置记录 Nginx 的错误日志是调试 Nginx 服务的重要手段，属于核心功能模块（ngx_core_module）的参数，该参数的名字是 error_log</p>
+<h1 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h1><h2 id="日志配置参数"><a href="#日志配置参数" class="headerlink" title="日志配置参数"></a>日志配置参数</h2><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/3d8e4ebe/2.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h2 id="错误日志-–error-log"><a href="#错误日志-–error-log" class="headerlink" title="错误日志 –error.log"></a>错误日志 –error.log</h2><p>nginx的默认配置(缺省配置) 就是error_log logs/error.log error;//在nginx.conf里</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><table>
+<thead>
+<tr>
+<th>error_log</th>
+<th>file</th>
+<th>level</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>关键字(错误日志名称))</td>
+<td>日志文件(即保存日志文件路径）</td>
+<td>错误级别</td>
+</tr>
+</tbody></table>
+<p><em>关键字(名称不能改)，file–日志文件存放路径，level–保存什么级别的错误</em></p>
+<p>错误日志级别常见的有（从低到高排列）</p>
+<p>| debug | info | notice | warn | error | crit | alert | emerg |</p>
+<p>注意：<br><em>一般不记录info等低级别 带来大量磁盘io</em><br><em>场景一般是wam，error，crit这三个级别之一</em></p>
+<p>具体例子：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/3d8e4ebe/1.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><p>可以放置的标签段位： main，http，server，location等</p>
+<blockquote>
+<p>main (全局设置)<br>events(nginx工作模式）<br>http(http设置) : upstream（负载均衡服务器设置），<br>server(主机设置）：location（url匹配）</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/3d8e4ebe/3.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/3d8e4ebe/4.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/3d8e4ebe/5.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h2 id="访问日志"><a href="#访问日志" class="headerlink" title="访问日志"></a>访问日志</h2><blockquote>
+<p>nginx软件会把每个用户访问网站的日志信息记录到指定的日志文件里，供网站提供分析用户浏览行为等，此功能由ngx_http_log_module模块来负责。log_format   用来定义记录日志的格式（可以定义多种日志格式，取不同名字即可）access_log  用来指定日志文件的路径及使用的何种日志格式记录日志。</p>
+</blockquote>
+<h3 id="日志参数"><a href="#日志参数" class="headerlink" title="日志参数"></a>日志参数</h3><p><em>nginx日志格式默认的参数配置如下：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot;&#39;                     </span><br><span class="line"></span><br><span class="line">&#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;                      </span><br><span class="line"></span><br><span class="line">&#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>status</td>
+<td>http状态码，记录请求返回的状态，如301 200 404 等</td>
+</tr>
+<tr>
+<td>request</td>
+<td>http请求起始行的信息</td>
+</tr>
+<tr>
+<td>time_local</td>
+<td>记录访问时间与时区</td>
+</tr>
+<tr>
+<td>http_referer</td>
+<td>记录此次请求是从哪个链接访问过来的(发出)，可以根据referer进行防盗链设置</td>
+</tr>
+<tr>
+<td>remote_addr</td>
+<td>记录访问网站的客户端ip地址</td>
+</tr>
+<tr>
+<td>remote_user</td>
+<td>客户端用户名称</td>
+</tr>
+<tr>
+<td>http_user_agent</td>
+<td>记录客户端的访问信息，如：浏览器、手机客户端</td>
+</tr>
+<tr>
+<td>body_bytes_send</td>
+<td>服务器发送给客户端的响应body 字节数</td>
+</tr>
+<tr>
+<td>http_x_forwarded_for</td>
+<td>当前端有代理服务器时，设置web节点记录客户端地址配置，此参数生效的前提是代理服务器上也要进行相关的x_forwarded_for设置</td>
+</tr>
+</tbody></table>
+<p>谷歌浏览器有插件可以修改x_forwarded_for、addr等请求ip ，许多接口可能只争对ip做了限制 ，还是容易被攻击</p>
+<h3 id="记录日志access-log参数说明："><a href="#记录日志access-log参数说明：" class="headerlink" title="记录日志access_log参数说明："></a>记录日志access_log参数说明：</h3><h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">access_log path [format [buffer&#x3D;size [flush &#x3D; time]] [if&#x3D;condition]]   </span><br><span class="line">access_log path format gzip [&#x3D;level] [buffer &#x3D; size] [flush &#x3D; time] [if &#x3D; condition];    </span><br><span class="line">access_log syslog:server&#x3D;address[,parameter&#x3D;value] [format [if&#x3D;condition]];</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>buffer=size</td>
+<td>为存放访问日志的缓冲区大小</td>
+</tr>
+<tr>
+<td>flush=time</td>
+<td>为将缓冲区的日志刷到磁盘的时间</td>
+</tr>
+<tr>
+<td>gzip[=level]</td>
+<td>表示压缩级别</td>
+</tr>
+<tr>
+<td>[if = condition]</td>
+<td>其他条件</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>一般的场景，这些参数都无需配置，极端优化才可能考虑这些参数。access_log off   off,表示不记录访问日志。</p>
+</blockquote>
+<h3 id="编辑主配置文件nginx-conf-增加错误日志配置："><a href="#编辑主配置文件nginx-conf-增加错误日志配置：" class="headerlink" title="编辑主配置文件nginx.conf 增加错误日志配置："></a>编辑主配置文件nginx.conf 增加错误日志配置：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">worker_processes  1;</span><br><span class="line">error_log logs&#x2F;error.log error;</span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024;</span><br><span class="line">&#125;</span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;</span><br><span class="line">    default_type  application&#x2F;octet-stream;</span><br><span class="line">    sendfile        on;</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span><br><span class="line">                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span><br><span class="line">                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span><br><span class="line">#nginx vhosts config</span><br><span class="line">    include extra&#x2F;www.conf;</span><br><span class="line">    include extra&#x2F;bbs.conf;</span><br><span class="line">    include extra&#x2F;status.conf;</span><br><span class="line">    access_log logs&#x2F;access_www.log main;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>在高并发场景下加上buffer和flush，可以提高网站的性能：access_log logs/access_<a href="http://www.log" target="_blank" rel="noopener">www.log</a> main gzip buffer=32k flush=5s;</p>
+</blockquote>
+<h3 id="nginx访问日志轮询切割"><a href="#nginx访问日志轮询切割" class="headerlink" title="nginx访问日志轮询切割"></a>nginx访问日志轮询切割</h3><blockquote>
+<p>默认情况nginx会把所有的访问日志生成一个指定的访问日志文件access.log里，时间长了会导致日志个头很大，不利于分析日志和处理，因此，有必要对nginx按天或按小时进行切割成不同的文件保留，这里使用按天切割方法：</p>
+</blockquote>
+<p>shell脚本如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">Dateformat&#x3D;&#96;date +%Y%m%d -d -1day&#96;         &#x2F;&#x2F;定义时间</span><br><span class="line">Basedir&#x3D;&quot;&#x2F;application&#x2F;nginx&quot;          &#x2F;&#x2F;nginx安装目录</span><br><span class="line">Nginxlogdir&#x3D;&quot;$Basedir&#x2F;logs&quot;          &#x2F;&#x2F;存放日志的目录</span><br><span class="line">Logname&#x3D;&quot;access_www&quot;            &#x2F;&#x2F;日志的名称</span><br><span class="line">[ -d $Nginxlogdir ] &amp;&amp; cd $Nginxlogdir||exit 1 &#x2F;&#x2F;判断如果有存放目录就cd进去，否则退出</span><br><span class="line">[ -f $&#123;Logname&#125;.log ]||exit 1   &#x2F;&#x2F;判断如果不存在日志名称就执行下面命令，否则退出</span><br><span class="line">&#x2F;bin&#x2F;mv $&#123;Logname&#125;.log $&#123;Dateformat&#125;_$&#123;Logname&#125;.log  &#x2F;&#x2F;把当前日志名重命名为时间日志名</span><br><span class="line">$Basedir&#x2F;sbin&#x2F;nginx -s reload  &#x2F;&#x2F;从新生成一个不带时间的日志文件</span><br></pre></td></tr></table></figure>
+
+<p><em>然后去设置一下定时任务</em></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-12T06:30:34.416Z" itemprop="dateUpdated">2020-03-12 14:30:34</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="许大志">
+            许大志
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/3d8e4ebe/&title=《nginx 日志配置》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/3d8e4ebe/&title=《nginx 日志配置》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/3d8e4ebe/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《nginx 日志配置》 — DAZE&url=http://yoursite.com/daze/3d8e4ebe/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/3d8e4ebe/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/daze/3e01b4d/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">curl</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "n2tYb2MJ71JloM2lUaXCyavh-MdYXbMMI",
+            appKey: "sNgzCjhY4fATL7ctMu0Q2VaB",
+            avatar: "mm",
+            placeholder: "go go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechatpay.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>许大志 &copy; 2019 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/3d8e4ebe/&title=《nginx 日志配置》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/3d8e4ebe/&title=《nginx 日志配置》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/3d8e4ebe/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《nginx 日志配置》 — DAZE&url=http://yoursite.com/daze/3d8e4ebe/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/3d8e4ebe/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/daze/3d8e4ebe/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
