@@ -21,15 +21,15 @@
     
     
     <meta name="keywords" content="zookeeper">
-    <meta name="description" content="Zookeeper是什么zookeeper 是一个分布式服务框架，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。简单来说zookeeper&#x3D;文件系统+监听通知机制。 zookeeper是个CP的中间件，注重一致性(什么是CAP微服务架构--cap的取舍)。 Zookeeper 是通过 zab协议来保证分布式事务的最终一致">
+    <meta name="description" content="Zookeeper是什么zookeeper 是一个分布式服务框架，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。简单来说zookeeper&#x3D;文件系统+监听通知机制。 zookeeper是个CP的中间件，注重一致性(什么是CAP微服务架构--cap的取舍)。 Zookeeper 是通过 zab协议 来保证分布式事务的最终一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="了解Zookeeper">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;219b9110&#x2F;index.html">
 <meta property="og:site_name" content="DAZE">
-<meta property="og:description" content="Zookeeper是什么zookeeper 是一个分布式服务框架，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。简单来说zookeeper&#x3D;文件系统+监听通知机制。 zookeeper是个CP的中间件，注重一致性(什么是CAP微服务架构--cap的取舍)。 Zookeeper 是通过 zab协议来保证分布式事务的最终一致">
+<meta property="og:description" content="Zookeeper是什么zookeeper 是一个分布式服务框架，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。简单来说zookeeper&#x3D;文件系统+监听通知机制。 zookeeper是个CP的中间件，注重一致性(什么是CAP微服务架构--cap的取舍)。 Zookeeper 是通过 zab协议 来保证分布式事务的最终一">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-07T03:44:28.000Z">
-<meta property="article:modified_time" content="2020-12-10T10:33:04.506Z">
+<meta property="article:modified_time" content="2020-12-11T02:54:13.722Z">
 <meta property="article:author" content="许大志">
 <meta property="article:tag" content="zookeeper">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Zookeeper是什么"><span class="post-toc-number">1.</span> <span class="post-toc-text">Zookeeper是什么</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Zookeeper-是通过-来保证分布式事务的最终一致性。"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Zookeeper 是通过 zab协议来保证分布式事务的最终一致性。</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么情况下要用zookeeper呢"><span class="post-toc-number">2.</span> <span class="post-toc-text">什么情况下要用zookeeper呢</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#zookeeper的结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">zookeeper的结构</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Zookeeper是什么"><span class="post-toc-number">1.</span> <span class="post-toc-text">Zookeeper是什么</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么情况下要用zookeeper呢"><span class="post-toc-number">2.</span> <span class="post-toc-text">什么情况下要用zookeeper呢</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#zookeeper的结构"><span class="post-toc-number">3.</span> <span class="post-toc-text">zookeeper的结构</span></a></li></ol>
         </nav>
     </aside>
 
@@ -179,7 +179,9 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <h1 id="Zookeeper是什么"><a href="#Zookeeper是什么" class="headerlink" title="Zookeeper是什么"></a>Zookeeper是什么</h1><p>zookeeper 是一个分布式服务框架，它主要是用来解决分布式应用中经常遇到的一些数据管理问题，如：统一命名服务、状态同步服务、集群管理、分布式应用配置项的管理等。简单来说zookeeper=文件系统+监听通知机制。</p>
 <p><strong>zookeeper是个CP的中间件，注重一致性(什么是CAP<a href="/daze/e9db2952/" title="微服务架构--cap的取舍">微服务架构--cap的取舍</a>)。</strong></p>
-<h2 id="Zookeeper-是通过-来保证分布式事务的最终一致性。"><a href="#Zookeeper-是通过-来保证分布式事务的最终一致性。" class="headerlink" title="Zookeeper 是通过 来保证分布式事务的最终一致性。"></a><strong>Zookeeper 是通过 <a href="/daze/9f3266e3/" title="zab协议">zab协议</a>来保证分布式事务的最终一致性。</strong></h2><h1 id="什么情况下要用zookeeper呢"><a href="#什么情况下要用zookeeper呢" class="headerlink" title="什么情况下要用zookeeper呢"></a>什么情况下要用zookeeper呢</h1><p>首先，我们搞清楚为什么我们需要zookeeper这项技术呢</p>
+<p><strong>Zookeeper 是通过 <a href="/daze/9f3266e3/" title="zab协议">zab协议</a> 来保证分布式事务的最终一致性。</strong></p>
+<hr>
+<h1 id="什么情况下要用zookeeper呢"><a href="#什么情况下要用zookeeper呢" class="headerlink" title="什么情况下要用zookeeper呢"></a>什么情况下要用zookeeper呢</h1><p>首先，我们搞清楚为什么我们需要zookeeper这项技术呢</p>
 <p>举个例子：<br>比如我们搭建了一个数据库的集群，里面有一个master，若干个slave，master负责写入，slave负责读，但是客户端要怎么区分我要去找哪个数据库做对应的操作呢?<br>所以我们需要有个东西，去告诉客户端，哪个是master你可以写入。<br>而且还不能是单机系统，得是一个服务器集群，防止单机挂了，没人告诉客户端对应数据库信息。</p>
 <hr>
 <h1 id="zookeeper的结构"><a href="#zookeeper的结构" class="headerlink" title="zookeeper的结构"></a>zookeeper的结构</h1>
@@ -190,7 +192,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-12-10T10:33:04.506Z" itemprop="dateUpdated">2020-12-10 18:33:04</time>
+    最后更新时间：<time datetime="2020-12-11T02:54:13.722Z" itemprop="dateUpdated">2020-12-11 10:54:13</time>
 </span><br>
 
 
@@ -386,7 +388,7 @@
         </p>
     </div>
     <div class="bottom">
-        <p><span>许大志 &copy; 2019 - 2020</span>
+        <p><span>许大志 &copy; 2019 - 2021</span>
             <span>
                 
                 Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
