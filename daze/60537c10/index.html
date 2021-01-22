@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Elasticsearch | DAZE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Elasticsearch">
+    <meta name="description" content="Elasticsearch 为什么比 mysql这些关系型数据库快 Elasyocsearch 是一个基于Apache lucence开源搜索引擎（ES建立索引的原理是基于lucene的倒排索引），要知道eselasticsearch为什么比关系型数据库快的原因必须先了解2者建立索引的过程   MySql的索引先从MySQL说起，索引这个词想必大家也是烂熟于心，通常存在于一些查询的场景，是典型的空">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;index.html">
+<meta property="og:site_name" content="DAZE">
+<meta property="og:description" content="Elasticsearch 为什么比 mysql这些关系型数据库快 Elasyocsearch 是一个基于Apache lucence开源搜索引擎（ES建立索引的原理是基于lucene的倒排索引），要知道eselasticsearch为什么比关系型数据库快的原因必须先了解2者建立索引的过程   MySql的索引先从MySQL说起，索引这个词想必大家也是烂熟于心，通常存在于一些查询的场景，是典型的空">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;10.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;13.png">
+<meta property="article:published_time" content="2021-01-18T02:17:18.000Z">
+<meta property="article:modified_time" content="2021-01-22T10:32:23.301Z">
+<meta property="article:author" content="许大志">
+<meta property="article:tag" content="Elasticsearch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;60537c10&#x2F;1.png">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">许大志</h5>
+          <a href="mailto:327690910@qq.com" title="327690910@qq.com" class="mail">327690910@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Elasticsearch</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Elasticsearch</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-01-18T02:17:18.000Z" itemprop="datePublished" class="page-time">
+  2021-01-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Elasticsearch-为什么比-mysql这些关系型数据库快"><span class="post-toc-number">1.</span> <span class="post-toc-text">Elasticsearch 为什么比 mysql这些关系型数据库快</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MySql的索引"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">MySql的索引</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常见的数据结构"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">常见的数据结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#平衡二叉树的优化"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">平衡二叉树的优化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用索引的一些建议"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">使用索引的一些建议</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ES索引"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">ES索引</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正排索引"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">正排索引</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#倒排索引"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">倒排索引</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Term-Dictionary"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">Term Dictionary</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Term-Index"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">Term Index</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#更多优化"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">更多优化</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">2.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-elasticsearch"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Elasticsearch</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-01-18 10:17:18" datetime="2021-01-18T02:17:18.000Z"  itemprop="datePublished">2021-01-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="Elasticsearch-为什么比-mysql这些关系型数据库快"><a href="#Elasticsearch-为什么比-mysql这些关系型数据库快" class="headerlink" title="Elasticsearch 为什么比 mysql这些关系型数据库快"></a>Elasticsearch 为什么比 mysql这些关系型数据库快</h1><blockquote>
+<p>Elasyocsearch 是一个基于Apache lucence开源搜索引擎（ES建立索引的原理是基于lucene的倒排索引），要知道eselasticsearch为什么比关系型数据库快的原因必须先了解2者建立索引的过程</p>
+</blockquote>
+<hr>
+<h2 id="MySql的索引"><a href="#MySql的索引" class="headerlink" title="MySql的索引"></a>MySql的索引</h2><p>先从MySQL说起，索引这个词想必大家也是烂熟于心，通常存在于一些查询的场景，是典型的空间换时间的案例。以下内容以 InnoDB 引擎为例。</p>
+<h3 id="常见的数据结构"><a href="#常见的数据结构" class="headerlink" title="常见的数据结构"></a><strong>常见的数据结构</strong></h3><p>假设由我们自己来设计 MySQL 的索引，大概会有哪些选择呢？</p>
+<ol>
+<li><strong>散列表</strong></li>
+</ol>
+<p>首先我们应当想到的是散列表，这是一个非常常见且高效的查询、写入的数据结构。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/1.png" alt="散列表结构" title>
+                </div>
+                <div class="image-caption">散列表结构</div>
+            </figure>
+
+<p>这个数据结构应该不需要过多介绍了，它的写入效率很高 O(1)，比如我们要查询 id=3 的数据时，需要将 3 进行哈希运算，然后再这个数组中找到对应的位置即可。</p>
+<p>但如果我们想查询 1≤id≤6 这样的区间数据时，散列表就不能很好的满足了，由于它是无序的，所以得将所有数据遍历一遍才能知道哪些数据属于这个区间。</p>
+<ol start="2">
+<li><strong>有序数组</strong></li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/2.png" alt="有序数组" title>
+                </div>
+                <div class="image-caption">有序数组</div>
+            </figure>
+
+<p>有序数组的查询效率也很高，当我们要查询 id=4 的数据时，只需要通过二分查找也能高效定位到数据 O(logn)。</p>
+<p>同时由于数据也是有序的，所以自然也能支持区间查询；这么看来有序数组适合用做索引咯？</p>
+<p>自然是不行，它有另一个重大问题；假设我们插入了 id=2.5 的数据，就得同时将后续的所有数据都移动一位，这个写入效率就会变得非常低。</p>
+<ol start="3">
+<li><strong>平衡二叉树</strong></li>
+</ol>
+<p>既然有序数组的写入效率不高，那我们就来看看写入效率高的，很容易就能想到二叉树。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/3.png" alt="平衡二叉树例子" title>
+                </div>
+                <div class="image-caption">平衡二叉树例子</div>
+            </figure>
+
+<p>由于平衡二叉树的特性：左节点小于父节点、右节点大于父节点。</p>
+<p>所以假设我们要查询 id=11 的数据，只需要查询 10→12→11 便能最终找到数据，时间复杂度为 O(logn)，同理写入数据时也为 O(logn)。</p>
+<p>但依然不能很好的支持区间范围查找，假设我们要查询 5≤id≤20 的数据时，需要先查询 10 节点的左子树再查询 10 节点的右子树最终才能查询到所有数据。导致这样的查询效率并不高。</p>
+<ol start="4">
+<li><strong>跳表</strong></li>
+</ol>
+<p>跳表可能不像上边提到的散列表、有序数组、二叉树那样日常见的比较多，但其实 Redis 中的 sort set 就采用了跳表实现。这里我们简单介绍下跳表实现的数据结构有何优势。</p>
+<p>我们都知道即便是对一个有序链表进行查询效率也不高，由于它不能使用数组下标进行二分查找，所以时间复杂度是 o(n)。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/4.png" alt="但我们也可以巧妙的优化链表来变相的实现二分查找，如上图" title>
+                </div>
+                <div class="image-caption">但我们也可以巧妙的优化链表来变相的实现二分查找，如上图</div>
+            </figure>
+
+<p>我们可以为最底层的数据提取出一级索引、二级索引，根据数据量的不同，我们可以提取出 N级索引。当我们查询时便可以利用这里的索引变相的实现了二分查找。</p>
+<p>假设现在要查询 id=13 的数据，只需要遍历 1→7→10→13 四个节点便可以查询到数据，当数越多时，效率提升会更明显。</p>
+<p>同时区间查询也是支持，和刚才的查询单个节点类似，只需要查询到起始节点，然后依次往后遍历（链表有序）到目标节点便能将整个范围的数据查询出来。</p>
+<p>同时由于我们在索引上不会存储真正的数据，只是存放一个指针，相对于最底层存放数据的链表来说占用的空间便可以忽略不计了。</p>
+<hr>
+<h3 id="平衡二叉树的优化"><a href="#平衡二叉树的优化" class="headerlink" title="平衡二叉树的优化"></a>平衡二叉树的优化</h3><blockquote>
+<p>但其实 MySQL 中的 InnoDB 并没有采用跳表，而是使用的一个叫做 <strong>B+树</strong>的数据结构。</p>
+</blockquote>
+<p>这个数据结构不像是二叉树那样大学老师当做基础数据结构经常讲到，由于这类数据结构都是在实际工程中根据需求场景在基础数据结构中演化而来。</p>
+<p>比如这里的 B+树就可以认为是由平衡二叉树演化而来。刚才我们提到二叉树的区间查询效率不高，针对这一点便可进行优化：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/5.png" alt="平衡二叉树" title>
+                </div>
+                <div class="image-caption">平衡二叉树</div>
+            </figure>
+
+<p>在原有二叉树的基础上优化后：所有的非叶子都不存放数据，只是作为叶子节点的索引，数据全部都存放在叶子节点。</p>
+<p>这样所有叶子节点的数据都是有序存放的，便能很好的支持区间查询。只需要先通过查询到起始节点的位置，然后在叶子节点中依次往后遍历即可。</p>
+<p>当数据量巨大时，很明显索引文件是不能存放于内存中，虽然速度很快但消耗的资源也不小；所以 MySQL 会将索引文件直接存放于磁盘中。</p>
+<p>这点和后文提到 Elasticsearch 的索引略有不同。由于索引存放于磁盘中，所以我们要尽可能的减少与磁盘的 IO（磁盘 IO 的效率与内存不在一个数量级）。</p>
+<p>通过上图可以看出，我们要查询一条数据至少得进行 4 次IO，很明显这个 IO 次数是与树的高度密切相关的，树的高度越低 IO 次数就会越少，同时性能也会越好。</p>
+<blockquote>
+<p>那怎样才能降低树的高度呢？</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/6.png" alt="多叉树" title>
+                </div>
+                <div class="image-caption">多叉树</div>
+            </figure>
+
+<p>我们可以尝试把二叉树变为三叉树，这样树的高度就会下降很多，这样查询数据时的IO次数自然也会降低，同时查询效率也会提高许多。这其实就是 B+ 树的由来。</p>
+<hr>
+<h3 id="使用索引的一些建议"><a href="#使用索引的一些建议" class="headerlink" title="使用索引的一些建议"></a>使用索引的一些建议</h3><p>其实通过上图对 B+树的理解，也能优化日常工作的一些小细节；比如为什么需要最好是有序递增的？</p>
+<p>假设我们写入的主键数据是无序的，那么有可能后写入数据的id小于之前写入的，这样在维护B+树索引时便有可能需要移动已经写好数据。</p>
+<p>如果是按照递增写入数据时则不会有这个考虑，每次只需要依次写入即可。所以我们才会要求数据库主键尽量是趋势递增的，不考虑分表的情况时最合理的就是自增主键。</p>
+<p>整体来看思路和跳表类似，只是针对使用场景做了相关的调整（比如数据全部存储于叶子节点）。</p>
+<hr>
+<h2 id="ES索引"><a href="#ES索引" class="headerlink" title="ES索引"></a>ES索引</h2><p>MySQL 聊完了，现在来看看 Elasticsearch 是如何来使用索引的。</p>
+<h3 id="正排索引"><a href="#正排索引" class="headerlink" title="正排索引"></a>正排索引</h3><p>在 ES 中采用的是一种名叫倒排索引的数据结构；在正式讲倒排索引之前先来聊聊和他相反的正排索引。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/7.png" alt="正排索引结构" title>
+                </div>
+                <div class="image-caption">正排索引结构</div>
+            </figure>
+
+<p>以上图为例，我们可以通过 doc_id 查询到具体对象的方式称为使用正排索引，其实也能理解为一种散列表。</p>
+<p>本质是通过 key 来查找 value。比如通过 doc_id=4 便能很快查询到 name=jetty wang，age=20 这条数据。</p>
+<hr>
+<h3 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h3><p>那如果反过来我想查询 name 中包含了 li 的数据有哪些？这样如何高效查询呢？</p>
+<p>仅仅通过上文提到的正排索引显然起不到什么作用，只能依次将所有数据遍历后判断名称中是否包含 li ；这样效率十分低下。</p>
+<blockquote>
+<p>但如果我们重新构建一个索引结构：</p>
+</blockquote>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/8.png" alt="倒排索引结构" title>
+                </div>
+                <div class="image-caption">倒排索引结构</div>
+            </figure>
+
+<p>当要查询 name 中包含 li 的数据时，只需要通过这个索引结构查询到 Posting List 中所包含的数据，再通过映射的方式查询到最终的数据。</p>
+<p>这个索引结构其实就是倒排索引。</p>
+<hr>
+<h3 id="Term-Dictionary"><a href="#Term-Dictionary" class="headerlink" title="Term Dictionary"></a>Term Dictionary</h3><p>但如何高效的在这个索引结构中查询到li呢，结合我们之前的经验，只要我们将Term有序排列，便可以使用二叉树搜索树的数据结构在 o(logn) 下查询到数据。</p>
+<p>将一个文本拆分成一个一个独立Term 的过程其实就是我们常说的分词。</p>
+<p>而将所有 Term 合并在一起就是一个 Term Dictionary，也可以叫做单词词典。</p>
+<p>英文的分词相对简单，只需要通过空格、标点符号将文本分隔便能拆词，中文则相对复杂，但也有许多开源工具做支持（由于不是本文重点，对分词感兴趣的可以自行搜索）。</p>
+<p>当我们的文本量巨大时，分词后的 Term 也会很多，这样一个倒排索引的数据结构如果存放于内存那肯定是不够存的，但如果像MySQL那样存放于磁盘，效率也没那么高。</p>
+<hr>
+<h3 id="Term-Index"><a href="#Term-Index" class="headerlink" title="Term Index"></a>Term Index</h3><p>所以我们可以选择一个折中的方法，既然无法将整个 Term Dictionary 放入内存中，那我们可以为 Term Dictionary 创建一个索引然后放入内存中。</p>
+<p>这样便可以高效的查询 Term Dictionary ，最后再通过 Term Dictionary 查询到 Posting List。</p>
+<p>相对于 MySQL 中的 B+树来说也会减少了几次磁盘 IO。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/9.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>这个 Term Index 我们可以使用这样的 Trie 树，也就是我们常说的字典树来存放。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/10.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>如果我们是以 j 开头的 Term 进行搜索，首先第一步就是通过在内存中的 Term Index 查询出以 j 打头的 Term 在 Term Dictionary 字典文件中的哪个位置（这个位置可以是一个文件指针，可能是一个区间范围）。</p>
+<p>紧接着在将这个位置区间中的所有 Term 取出，由于已经排好序，便可通过二分查找快速定位到具体位置；这样便可查询出 Posting List。</p>
+<p>最终通过 Posting List 中的位置信息便可在原始文件中将目标数据检索出来。</p>
+<h3 id="更多优化"><a href="#更多优化" class="headerlink" title="更多优化"></a>更多优化</h3><p>当然 Elasticsearch 还做了许多针对性的优化，当我们对两个字段进行检索时，就可以利用 Bitmap 进行优化。</p>
+<p>比如现在需要查询 name=li and age=18 的数据，这时我们需要通过这两个字段将各自的结果 Posting List 取出。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/11.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>最简单的方法是分别遍历两个集合，取出重复的数据，但这个明显效率低下。</p>
+<p>这时我们便可使用 Bitmap 的方式进行存储（还节省存储空间），同时利用先天的位与计算便可得出结果。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/12.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>最终反解出 Posting List 为 [1, 5]，这样的效率自然是要高上许多。同样的查询需求在MySQL中并没有特殊优化，只是先将数据量小的数据筛选出来之后再筛选第二个字段，效率自然也就没有 ES 高。</p>
+<p>当然在最新版的 ES 中也会对 Posting List 进行压缩，具体压缩规则可以查看官方文档，这里就不具体介绍了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后我们来总结一下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/60537c10/13.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>通过以上内容可以看出再复杂的产品最终都是基础数据结构组成，只是会对不同应用场景针对性的优化，所以打好数据结构与算法的基础后再看某个新的技术或中间件时才能快速上手，甚至自己就能知道优化方向。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-01-22T10:32:23.301Z" itemprop="dateUpdated">2021-01-22 18:32:23</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="许大志">
+            许大志
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/" rel="tag">Elasticsearch</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/60537c10/&title=《Elasticsearch》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/60537c10/&title=《Elasticsearch》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/60537c10/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Elasticsearch》 — DAZE&url=http://yoursite.com/daze/60537c10/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/60537c10/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/daze/38d99f38/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">数据库事务需要具有特性</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "n2tYb2MJ71JloM2lUaXCyavh-MdYXbMMI",
+            appKey: "sNgzCjhY4fATL7ctMu0Q2VaB",
+            avatar: "mm",
+            placeholder: "go go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechatpay.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>许大志 &copy; 2019 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/60537c10/&title=《Elasticsearch》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/60537c10/&title=《Elasticsearch》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/60537c10/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Elasticsearch》 — DAZE&url=http://yoursite.com/daze/60537c10/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/60537c10/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/daze/60537c10/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
