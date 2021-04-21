@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>分布式事务 | DAZE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="前言  分布式事务框架学习  什么是事务与架构 数据库事务需要具有特性   微服务架构--cap的取舍   分布式事务实现方案 基于数据库资源层面  2PC 两阶段提交协议  3PC 三阶段提价协议  基于业务层面  TCC    基于数据库资源层面实现方案，由于存在多个事务，我们需要存在一个角色管理各个事务的状态。我们将这个角色称为协调者，事务参与者称为参与者。参与者与协调者一般会基于某种特定协">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式事务">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;index.html">
+<meta property="og:site_name" content="DAZE">
+<meta property="og:description" content="前言  分布式事务框架学习  什么是事务与架构 数据库事务需要具有特性   微服务架构--cap的取舍   分布式事务实现方案 基于数据库资源层面  2PC 两阶段提交协议  3PC 三阶段提价协议  基于业务层面  TCC    基于数据库资源层面实现方案，由于存在多个事务，我们需要存在一个角色管理各个事务的状态。我们将这个角色称为协调者，事务参与者称为参与者。参与者与协调者一般会基于某种特定协">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;4.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;5.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;6.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;7.jpg">
+<meta property="article:published_time" content="2021-04-06T09:23:56.000Z">
+<meta property="article:modified_time" content="2021-04-20T10:16:13.011Z">
+<meta property="article:author" content="许大志">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;daze&#x2F;cdcc4eae&#x2F;1.png">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">许大志</h5>
+          <a href="mailto:327690910@qq.com" title="327690910@qq.com" class="mail">327690910@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">分布式事务</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">分布式事务</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-04-06T09:23:56.000Z" itemprop="datePublished" class="page-time">
+  2021-04-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80/">服务器基础</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么是事务与架构"><span class="post-toc-number">2.</span> <span class="post-toc-text">什么是事务与架构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#分布式事务实现方案"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式事务实现方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2PC两阶段提交协议"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">2PC两阶段提交协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3PC三阶段提交协议"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">3PC三阶段提交协议</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TCC"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">TCC</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#下面模拟一次外卖系统的支付过程"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">下面模拟一次外卖系统的支付过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#引入TCC事务"><span class="post-toc-number">3.3.2.</span> <span class="post-toc-text">引入TCC事务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TCC-TRY"><span class="post-toc-number">3.3.2.1.</span> <span class="post-toc-text">TCC TRY:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TCC-Confirm"><span class="post-toc-number">3.3.2.2.</span> <span class="post-toc-text">TCC Confirm:</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TCC-Cancle："><span class="post-toc-number">3.3.2.3.</span> <span class="post-toc-text">TCC Cancle：</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-分布式事务"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">分布式事务</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-04-06 17:23:56" datetime="2021-04-06T09:23:56.000Z"  itemprop="datePublished">2021-04-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%BA%E7%A1%80/">服务器基础</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><hr>
+<p> 分布式事务框架学习</p>
+<hr>
+<h1 id="什么是事务与架构"><a href="#什么是事务与架构" class="headerlink" title="什么是事务与架构"></a>什么是事务与架构</h1> <a href="/daze/38d99f38/" title="数据库事务需要具有特性">数据库事务需要具有特性</a>
+<br>
+ <a href="/daze/e9db2952/" title="微服务架构--cap的取舍">微服务架构--cap的取舍</a>
+
+<hr>
+<h1 id="分布式事务实现方案"><a href="#分布式事务实现方案" class="headerlink" title="分布式事务实现方案"></a>分布式事务实现方案</h1><ol>
+<li><p>基于数据库资源层面</p>
+</li>
+<li><p>2PC 两阶段提交协议</p>
+</li>
+<li><p>3PC 三阶段提价协议</p>
+</li>
+<li><p>基于业务层面</p>
+</li>
+<li><p>TCC</p>
+</li>
+</ol>
+<blockquote>
+<p>基于数据库资源层面实现方案，由于存在多个事务，我们需要存在一个角色管理各个事务的状态。我们将这个角色称为协调者，事务参与者称为参与者。参与者与协调者一般会基于某种特定协议，目前比较有名的为 XA 接口协议。基于协调者与参与者的思想设定，分别提出了 2PC 与 3PC 实现XA 分布式事务。</p>
+</blockquote>
+<h2 id="2PC两阶段提交协议"><a href="#2PC两阶段提交协议" class="headerlink" title="2PC两阶段提交协议"></a>2PC两阶段提交协议</h2><p> 过程主要分为两步。 </p>
+<p> 第一阶段，协调者(事务管理器)将涉及到事务的进行预提交，这个时候数据库资源开始被锁定。参与者将 redo 与 undo 写入事务日志。第二阶段，参与者（资源管理器）按redo提交事务，或者利用 undo 日志回滚事务，释放资源。</p>
+<p> 整个过程如下图。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/1.png" alt="分布式事务提交成功场景" title>
+                </div>
+                <div class="image-caption">分布式事务提交成功场景</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/2.png" alt="分布式事务失败回滚场景" title>
+                </div>
+                <div class="image-caption">分布式事务失败回滚场景</div>
+            </figure>
+
+<ul>
+<li><p>优点：<br>  实现比较简单，主流数据库都支持，强一致性。MySQL 5.5 以后基于 XA 协议实现.</p>
+</li>
+<li><p>缺点：</p>
+<ol>
+<li>协调者的单点问题。若协调者在提交阶段宕机，参与者一直在等待,就一直锁定资源，一直阻塞。虽然可以重新选举协调者，但是无法解决该问题。</li>
+<li>同步阻塞时间过长，整个执行过程事务是阻塞的，直到提交完成，释放资源，若在提交过程/回滚过程，因为网络延时，参与者一直未收到指令，则参与者一直被阻塞。</li>
+<li>数据不一致。第二阶段，协调者发出第一个提交信号后后宕机，则第一个参与者提交事务，第二个参与者因为未收到协调者信号，无法进行事务提交。</li>
+</ol>
+</li>
+</ul>
+<h2 id="3PC三阶段提交协议"><a href="#3PC三阶段提交协议" class="headerlink" title="3PC三阶段提交协议"></a>3PC三阶段提交协议</h2><p> 2阶段的改进型</p>
+<p> 步骤如下 ： </p>
+<ol>
+<li><p>CanCommit,协调者询问参与者是否可以进行事务提交。</p>
+</li>
+<li><p>PreCommit ,若所有参与者可以进行事务提交，协调者下达 PreCommit 命令，参与者锁定资源，并等待最终命令。</p>
+</li>
+<li><p>所有参与者返回确认信息，协调者向各个事务下发事务执行通知，锁定资源，并将执行情况返回。</p>
+</li>
+<li><p>部分参与者返回否认信息或协调者等待超时。这种情况，协调者认为事务无法正常执行，下发中断指令，各个参与者退出预备状态</p>
+</li>
+<li><p>Do Commit，若第二阶段全部回应ack，则下达Do Commit，进行事务最终提交，否则下达中断事务命令，所有参与者进行事务回滚。</p>
+</li>
+<li><p>所有参与者正常执行执行事务，协调者下发最终提交指令，释放锁定资源。</p>
+</li>
+<li><p>部分参与者执行事务失败，协调者等待超时，协调者下发回滚指令，释放锁定资源。</p>
+</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/3.png" alt="3PC三阶段提交协议" title>
+                </div>
+                <div class="image-caption">3PC三阶段提交协议</div>
+            </figure>
+
+<p>三阶段提交对比两阶段，</p>
+<ul>
+<li>优点<br>引入超时机制减少事务阻塞，解决单点故障。在第三阶段，一旦参与者无法接受到协调者信号时，等待超时之后，参与者默认执行 commit，释放资源。</li>
+<li>缺点<br>三阶段仍然不能解决数据一致性问题。若协调者发出回滚命令，但是由于网络问题，参与者在等待时间内都无法接收到，这时参与者默认提交事务，而其他事务进行了回滚，造成事务不一致。</li>
+</ul>
+<h2 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h2><blockquote>
+<p>为了解决在事务运行过程中大颗粒度资源锁定的问题，业界提出一种新的事务模型，它是基于业务层面的事务定义。锁粒度完全由业务自己控制。它本质是一种补偿的思路。它把事务运行过程分成 Try、Confirm / Cancel 两个阶段。在每个阶段的逻辑由业务代码控制。这样就事务的锁粒度可以完全自由控制。业务可以在牺牲隔离性的情况下，获取更高的性能。</p>
+</blockquote>
+<p>TCC 分别为 Trying，Confirm，Cancel 三个单词缩写。不同于 2PC 与 3PC 基于数据库层面，TCC 基于应用层面。TCC 三个动作分别为：</p>
+<p>Trying：</p>
+<ul>
+<li>完成所有业务检查(一致性)</li>
+<li>预留必须业务资源(准隔离性)</li>
+</ul>
+<p>Confirm:</p>
+<ul>
+<li>真正执行业务</li>
+<li>Confirm操作要满足幂等性</li>
+</ul>
+<p>Cancel:</p>
+<ul>
+<li>释放Try阶段预留的业务资源</li>
+<li>Cancel操作要满足幂等性</li>
+</ul>
+<h3 id="下面模拟一次外卖系统的支付过程"><a href="#下面模拟一次外卖系统的支付过程" class="headerlink" title="下面模拟一次外卖系统的支付过程"></a>下面模拟一次外卖系统的支付过程</h3><p>步骤：</p>
+<ol>
+<li>创建订单</li>
+<li>调用红包系统，扣减红包</li>
+<li>调用余额系统，扣减余额</li>
+<li>修改订单状态为已支付</li>
+<li>完成支付。</li>
+</ol>
+<p>如下图所示</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/4.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>但是这么一个支付过程调用多个子服务，我们不能保证所有服务都能成功，比如我们在调用余额系统扣减余额失败。这个时候我们就碰到尴尬的场景，由于扣费服务失败，导致方法异常退出，这个时候订单状态为初始状态，但是用户红包已经扣减。这对用户体验非常不友好。所以这次支付过程，我们必须存在机制将这次过程当成一次整体的行为，必须保证这其中服务调用，要么都成功，要么都失败，成为一个整体的事务。</p>
+<h3 id="引入TCC事务"><a href="#引入TCC事务" class="headerlink" title="引入TCC事务"></a>引入TCC事务</h3><p>我们需要将各个服务改造成 Try Confirm Cancle 三步</p>
+<h4 id="TCC-TRY"><a href="#TCC-TRY" class="headerlink" title="TCC TRY:"></a>TCC TRY:</h4><p>根据上面的业务，订单系统增加 try 方法将订单状态修改成 PAYING。先从红包系统检查红包余额是否充足，然后扣除红包金额，余额系统和红包系统一样，再从从改造过程可以看出，TCC try 方法需检查各业务资源，且这过程需要引入中间状态。我们根据下图来看整个过程。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/5.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h4 id="TCC-Confirm"><a href="#TCC-Confirm" class="headerlink" title="TCC Confirm:"></a>TCC Confirm:</h4><p>TCC 第一步 TRY 如果所有子服务调用都成功，这个时候我们就需要确认各服务。各个服务增加 confirm 方法。如余额系统 confirm 方法用来将冻结金额置为0，红包系统如上。订单系统将订单状态修改为 SUCCESS。confirm 方法需要注意实现幂等。如订单系统更新前，一定要先判断该笔订单状态处于 PAYING，才能更新订单。整个过程如下图。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/6.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h4 id="TCC-Cancle："><a href="#TCC-Cancle：" class="headerlink" title="TCC Cancle："></a>TCC Cancle：</h4><p>如若 TCC Try 过程中，冻结红包方法失败，这时我们就需要将之前修改都撤销，修改成其初始状态。cancle 方法也需要实现幂等如 confirm 方法 如下图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/daze/cdcc4eae/7.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+
+
+<p>看到这，我们我们可以看出 TCC Try 成功，confirm 必定要成功，try 失败，cancle 必定要成功。因为 confirm 是系统更新为终态的关键。但是现实这么无情，生产系统 confirm 或 cancle 肯定会有几率失败，这个时候就需要 TCC 框架记录调用 confirm 结果。如果 confirm 调用失败，TCC 框架需要记录下来，然后间隔一定时间再次去调用。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-20T10:16:13.011Z" itemprop="dateUpdated">2021-04-20 18:16:13</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="许大志">
+            许大志
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/cdcc4eae/&title=《分布式事务》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/cdcc4eae/&title=《分布式事务》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/cdcc4eae/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式事务》 — DAZE&url=http://yoursite.com/daze/cdcc4eae/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/cdcc4eae/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/daze/60537c10/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Elasticsearch为什么快</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "n2tYb2MJ71JloM2lUaXCyavh-MdYXbMMI",
+            appKey: "sNgzCjhY4fATL7ctMu0Q2VaB",
+            avatar: "mm",
+            placeholder: "go go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechatpay.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>许大志 &copy; 2019 - 2021</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/daze/cdcc4eae/&title=《分布式事务》 — DAZE&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/daze/cdcc4eae/&title=《分布式事务》 — DAZE&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/daze/cdcc4eae/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《分布式事务》 — DAZE&url=http://yoursite.com/daze/cdcc4eae/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/daze/cdcc4eae/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/daze/cdcc4eae/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
